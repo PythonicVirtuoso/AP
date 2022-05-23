@@ -1,16 +1,17 @@
 //imports functions from different libraries
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { getNewColor } from "./getNewColor.js";
+import { Text, View, Button, Image } from "react-native";
 
-//exports the script underneath as a default function
+//exports the function "app"
 export default function App() {
   /*creates two constant variables and assigns them the setState function and a numeric value
   so the numeric value can be dynamically changed later on.
   */
   const [value, setValue] = useState(0);
   const [totalTaps, setTotalTaps] = useState(0);
-  const [color, setColor] = useState(0);
+  const [color, setColor] = useState("#f0f8ff");
 
   /* creates a variable and a function, and the values in the function are assigned to the variable.
   The aforementioned dynamic variables are set to increment with 1 in this function.
@@ -35,28 +36,23 @@ export default function App() {
   change background colour.
   */
   const setBackgroundColor = () => {
-    setColor(color + 1);
-
     /* function that gives you antiquewhite when you press aliceblue, then aliceblue
     when you press antiquewhite
     */
-    if (color == `#f0f8ff`) {
-      setColor(`#faebd7`);
-    } else {
-      setColor(`#f0f8ff`);
-    }
+
+    setColor(getNewColor(color));
 
     console.log("Colour: " + color);
   };
 
-  const styles = StyleSheet.create({
+  const styles = {
     container: {
       flex: 1,
       backgroundColor: color,
       alignItems: "center",
       justifyContent: "center",
     },
-  });
+  };
 
   //the code that is returned to the script
   return (
