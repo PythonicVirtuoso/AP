@@ -1,11 +1,46 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Text, View, Button, Image } from "react-native";
+import { Text, View, Button, TouchableOpacity } from "react-native";
+
+const FrenchFlag = () => {
+  return (
+    <View
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: "blue" }} />
+      <View style={{ flex: 1, backgroundColor: "white" }} />
+      <View style={{ flex: 1, backgroundColor: "red" }} />
+    </View>
+  );
+};
+
+const GermanFlag = () => {
+  return (
+    <View
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: "black" }} />
+      <View style={{ flex: 1, backgroundColor: "red" }} />
+      <View style={{ flex: 1, backgroundColor: "yellow" }} />
+    </View>
+  );
+};
 
 export default function App() {
   const [value, setValue] = useState(0);
   const [totalTaps, setTotalTaps] = useState(0);
-  const [color, setColor] = useState(FrenchFlag);
+  const [showFrenchFlag, setShowFrenchFlag] = useState(false);
+  const [color, setColor] = useState(`#f0f8ff`);
 
   const incrementValue = () => {
     setValue(value + 1);
@@ -22,47 +57,25 @@ export default function App() {
   };
 
   const setBackgroundColor = () => {
-    if (color == FrenchFlag) {
-      setColor(GermanFlag);
+    if (color == `#f0f8ff`) {
+      setColor(`#faebd7`);
     } else {
-      setColor(FrenchFlag);
+      setColor(`#f0f8ff`);
     }
 
     console.log("Colour: " + color);
   };
 
-  const FrenchFlag = () => {
-    return (
-      <View
-        style={[
-          styles.container,
-          {
-            flexDirection: "row",
-          },
-        ]}
-      >
-        <View style={{ flex: 1, backgroundColor: "blue" }} />
-        <View style={{ flex: 2, backgroundColor: "white" }} />
-        <View style={{ flex: 3, backgroundColor: "red" }} />
-      </View>
-    );
+  const getFlag = () => {
+    if (showFrenchFlag) {
+      return <FrenchFlag />;
+    } else {
+      return <GermanFlag />;
+    }
   };
 
-  const GermanFlag = () => {
-    return (
-      <View
-        style={[
-          styles.container,
-          {
-            flexDirection: "column",
-          },
-        ]}
-      >
-        <View style={{ flex: 1, backgroundColor: "black" }} />
-        <View style={{ flex: 1, backgroundColor: "red" }} />
-        <View style={{ flex: 1, backgroundColor: "yellow" }} />
-      </View>
-    );
+  const toggleFlag = () => {
+    setShowFrenchFlag(!showFrenchFlag);
   };
 
   const styles = {
@@ -72,29 +85,46 @@ export default function App() {
       alignItems: "center",
       justifyContent: "center",
     },
+    buttonOne: {
+      alignItems: "center",
+      backgroundColor: "#DDDDDD",
+      padding: 10,
+    },
+    buttonTwo: {
+      alignItems: "center",
+      backgroundColor: "#DDDDDD",
+      padding: 10,
+    },
+    buttonThree: {
+      alignItems: "center",
+      backgroundColor: "#DDDDDD",
+      padding: 10,
+    },
   };
 
   return (
     <View style={styles.container}>
-      <View>
-        <Image
-          source={{
-            uri: "https://m.media-amazon.com/images/I/71uJRRJgeiL._AC_SS450_.jpg",
-          }}
-          style={{ width: 200, height: 200 }}
-        />
-      </View>
+      {getFlag()}
       <Text style={{ fontSize: 60, marginBottom: -20 }}> {value} </Text>
       <Text style={{ fontSize: 12, padding: 20, color: "grey" }}>
         {"Total taps: " + totalTaps}
       </Text>
       <StatusBar style="auto" />
       <View style={{ flexDirection: "row" }}>
-        <Button onPress={decrementValue} title="Decrease" />
-        <Button onPress={incrementValue} title="Increase" />
+        <TouchableOpacity style={styles.buttonTwo} onPress={incrementValue}>
+          <Text>Increase</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonThree} onPress={decrementValue}>
+          <Text>Decrease</Text>
+        </TouchableOpacity>
       </View>
-      <View>
-        <Button onPress={setBackgroundColor} title="Colour" />
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity style={styles.buttonOne} onPress={toggleFlag}>
+          <Text>Press Here</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.container} onPress={setBackgroundColor}>
+          <Text>Press Here</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
