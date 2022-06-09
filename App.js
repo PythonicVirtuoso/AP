@@ -1,61 +1,136 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { Text, View, Button, TouchableOpacity } from "react-native";
 
+const FrenchFlag = () => {
+  return (
+    <View
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: "blue" }} />
+      <View style={{ flex: 1, backgroundColor: "white" }} />
+      <View style={{ flex: 1, backgroundColor: "red" }} />
+    </View>
+  );
+};
 
-export default class App extends React.Component {
-  state = {
-    value: 0,
-    total_taps: 0
-  }
+const GermanFlag = () => {
+  return (
+    <View
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: "black" }} />
+      <View style={{ flex: 1, backgroundColor: "red" }} />
+      <View style={{ flex: 1, backgroundColor: "yellow" }} />
+    </View>
+  );
+};
 
-  incrementValue = () => {
-    this.setState({
-      value: this.state.value + 1,
-      total_taps: this.state.total_taps + 1
-    })
-    console.log("Value: " + (this.state.value + 1))
-  }
+export default function App() {
+  const [value, setValue] = useState(0);
+  const [totalTaps, setTotalTaps] = useState(0);
+  const [showFrenchFlag, setShowFrenchFlag] = useState(false);
+  const [color, setColor] = useState(`#f0f8ff`);
 
-  decrementValue = () => {
-    this.setState({
-      value: this.state.value - 1,
-      total_taps: this.state.total_taps + 1
-    })
-    console.log("Value: " + (this.state.value - 1))
-  }
-  
-  
-  render () {
-    return (
-      <View style={styles.container}>
-        <View>
-          <Image
-            source={{
-              uri: 'https://m.media-amazon.com/images/I/71uJRRJgeiL._AC_SS450_.jpg'
-            }}
-            style={{ width: 200, height: 200 }}
-            />
-        </View>
-        <Text style={{ fontSize: 60, marginBottom: -20}}>{this.state.value}</Text>
-        <Text style={{ fontSize: 12, padding: 20, color: 'grey'}}>{"Total taps: " + this.state.total_taps}</Text>
-        <StatusBar style="auto" />
-        <View style={{flexDirection:'row'}}>
-          <Button onPress={this.decrementValue} title="Decrease" />
-          <Text>   </Text>
-          <Button onPress={this.incrementValue} title="Increase" />
-        </View>
+  const incrementValue = () => {
+    setValue(value + 1);
+    setTotalTaps(totalTaps + 1);
+
+    console.log("Value: " + (value + 1));
+  };
+
+  const decrementValue = () => {
+    setValue(value - 1);
+    setTotalTaps(totalTaps + 1);
+
+    console.log("Value: " + (value - 1));
+  };
+
+  const setBackgroundColor = () => {
+    if (color == `#f0f8ff`) {
+      setColor(`#faebd7`);
+    } else {
+      setColor(`#f0f8ff`);
+    }
+
+    console.log("Colour: " + color);
+  };
+
+  const getFlag = () => {
+    if (showFrenchFlag) {
+      return <FrenchFlag />;
+    } else {
+      return <GermanFlag />;
+    }
+  };
+
+  const toggleFlag = () => {
+    setShowFrenchFlag(!showFrenchFlag);
+  };
+
+  const styles = {
+    container: {
+      flex: 1,
+      backgroundColor: color,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 10,
+    },
+    buttonOne: {
+      alignItems: "center",
+      backgroundColor: color,
+      padding: 10,
+      marginRight: 20,
+    },
+    buttonTwo: {
+      alignItems: "center",
+      backgroundColor: color,
+      padding: 10,
+      marginBottom: 20,
+      marginRight: 20,
+    },
+    buttonThree: {
+      alignItems: "center",
+      backgroundColor: color,
+      padding: 10,
+      marginBottom: 20,
+    },
+  };
+
+  return (
+    <View style={styles.container}>
+      {getFlag()}
+      <Text style={{ fontSize: 60, marginBottom: -20 }}> {value} </Text>
+      <Text style={{ fontSize: 12, padding: 20, color: "grey" }}>
+        {"Total taps: " + totalTaps}
+      </Text>
+      <StatusBar style="auto" />
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity style={styles.buttonTwo} onPress={incrementValue}>
+          <Text>Increase</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonThree} onPress={decrementValue}>
+          <Text>Decrease</Text>
+        </TouchableOpacity>
       </View>
-    );
-  }
-
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity style={styles.buttonOne} onPress={toggleFlag}>
+          <Text>Background</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.container} onPress={setBackgroundColor}>
+          <Text>Colour</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

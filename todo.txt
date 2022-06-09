@@ -1,0 +1,6 @@
+1. read through react fundamentals. DONE
+2. create button with touchableopacity - https://reactnative.dev/docs/touchableopacity DONE
+3. do backgroundcolour. DONE
+4. create margin between buttons (do it with touchableopacity). DONE
+5. make button look decent. DONE
+6. make it so backgroundcolor function can be used on touchableopacity button. DONE
