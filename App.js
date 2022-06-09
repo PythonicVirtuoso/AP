@@ -84,21 +84,26 @@ export default function App() {
       backgroundColor: color,
       alignItems: "center",
       justifyContent: "center",
+      padding: 10,
     },
     buttonOne: {
       alignItems: "center",
-      backgroundColor: "#DDDDDD",
+      backgroundColor: color,
       padding: 10,
+      marginRight: 20,
     },
     buttonTwo: {
       alignItems: "center",
-      backgroundColor: "#DDDDDD",
+      backgroundColor: color,
       padding: 10,
+      marginBottom: 20,
+      marginRight: 20,
     },
     buttonThree: {
       alignItems: "center",
-      backgroundColor: "#DDDDDD",
+      backgroundColor: color,
       padding: 10,
+      marginBottom: 20,
     },
   };
 
@@ -120,10 +125,10 @@ export default function App() {
       </View>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity style={styles.buttonOne} onPress={toggleFlag}>
-          <Text>Press Here</Text>
+          <Text>Background</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.container} onPress={setBackgroundColor}>
-          <Text>Press Here</Text>
+          <Text>Colour</Text>
         </TouchableOpacity>
       </View>
     </View>
